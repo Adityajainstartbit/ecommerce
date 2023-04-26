@@ -10,6 +10,7 @@ has_many :orders
   after_create :assign_default_role
 
   def assign_default_role
+    self.add_role(:admin) if User.first == self
     self.add_role(:customer) if self.roles.blank?
   end
 end
