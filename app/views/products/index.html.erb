@@ -1,0 +1,167 @@
+<p id="notice"><%= notice %></p>
+
+
+  <%= search_form_for @q do |f| %> 
+  <%#= search_form_for @ransack_products, as: :products_search, url: products_path do |f| %> 
+    <%= f.search_field :name_cont,placeholder: 'enter a product' %>
+    <%= f.submit  class: 'btn btn-success'%>
+    <% link_to '', products_path,class:'fa fa-refresh' %> 
+  <% end %>
+
+
+
+
+
+
+
+<% if user_signed_in? && current_user.has_role?(:admin) %>
+  <table class="table table-striped  table-dark" >
+  
+      <thead>
+        <tr>
+          <th>name</th>
+          <th>Image</th>
+          <th>Price</th>
+          <th>weight</th>
+          <th> Action </th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+      <tbody> 
+		<% @products.each do |product| %>
+			<tr>
+			<td><%= product.name %></td>
+				<% if product.image.attached?%>
+				<td> <%= image_tag product.image , style: "width: 100px;" %> </td>
+				<% end %>
+			<td><%= product.price %></td>
+			<td><%= product.weight %></td>
+			<td><%= link_to  product do %>
+					<i class="fa fa-eye"></i> 
+				<% end %>
+			</td>
+			<td><%= link_to  edit_product_path(product) do %>
+					<i class="fa fa-pencil"></i> 
+				<% end %>
+						
+			</td>
+			<td><%= link_to product, method: :delete, data: { confirm: 'Are you sure?' } do %>
+					<i class="fa fa-trash"></i> 
+				<% end %>
+			</td>
+			</tr>
+		<%end%>
+      </tbody>
+    <%= link_to 'New Product', new_product_path %>
+  </table>
+      
+<% else %>
+
+	<div class="container">
+		<div class="row isotope-grid"> 
+				               
+			<% @products.each do |product| %>
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">                         
+					
+					<div class="block2">
+						<div class="block2-pic hov-img0",style="width:100px ,height:207px">         
+							<% if product.image.attached? %>
+								<%= image_tag product.image, style: "width: 140px; height: 200px;"%>
+							<% end %>
+							
+								 
+                                <%= link_to 'Quick View', show_product_product_path(product) ,class: 'btn btn-success block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 ',style:"left:70px" %>
+
+						</div>  
+						
+						<%= link_to "Add to cart", line_items_path(product_id: product.id), method: :post %>
+						
+						<div class="block2-txt flex-w flex-t p-t-14">
+								<div class="block2-txt-child1 flex-col-l ">
+									<div class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+											
+									
+										<%= product.name %>
+									</div>
+									<span class="stext-105 cl3">
+										<%= product.price %> Rs
+									</span>
+								</div>
+						</div>
+
+						<div class="modal fade" id="quickViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header border-bottom-0">
+										<h5 class="modal-title" id="exampleModalLabel">
+											
+										</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<table class="table table-image">
+											<thead>
+												<tr>
+													<th scope="col"></th>
+													<th scope="col">Product</th>
+													<th scope="col">Price</th>
+													<th scope="col">Qty</th>
+													<th scope="col">Total</th>
+													<th scope="col">Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+
+													<td class="w-25">
+
+														
+													
+													
+														<a href="#" class="btn btn-danger btn-sm">
+															<i class="fa fa-times"></i>
+														</a>
+													</td>
+												</tr>
+											</tbody>
+										</table> 
+										<div class="d-flex justify-content-end">
+											<h5>Total: <span class="price text-success">89$</span></h5>
+										</div>
+									</div>
+									<div class="modal-footer border-top-0 d-flex justify-content-between">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+										<button type="button" class="btn btn-success">Checkout</button>
+									</div>
+								</div>
+							</div>
+							</div>  
+											
+								
+						</div>
+				</div>
+			<% end %>
+		</div>
+	</div>
+
+<% end %>
+
+
+<script>
+	document.getElementByid("exampleModalLabel").innerHtml=name
+$(document).on('click', '[data-toggle="modal"]', function () {
+  var productId = $(this).data('id');
+  $.ajax({
+    url: '/products/' + productId,
+    type: 'GET',
+    dataType: 'json',
+    success: function (data) {
+      // Fill in the modal content with the product details
+      $('#quickViewModal .modal-body').html(data.html);
+    }
+  });
+});
+
+	</script>

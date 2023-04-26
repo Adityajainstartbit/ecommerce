@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gofresh</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    
+    <%= javascript_pack_tag 'admin', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'admin', media: 'all', 'data-turbolinks-track': 'reload' %>
+   
+       <%#= stylesheet_link_tag 'admin/admin_styles' %>
+    
+   <%#= javascript_pack_tag 'admin/admin.js' %>
+ 
+   
+    
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <%#= stylesheet_link_tag 'font-awesome' %>
+  
+  <%#= javascript_pack_tag 'main.js' %>
+   <%#= javascript_include_tag 'main' %>
+ 
+
+
+  </head>
+
+  <body>
+   <div class="container-xxl position-relative bg-white d-flex p-0">
+   
+      <%= render 'pages/spinner' %>
+        <%= render 'pages/slidebar' %>
+        <div class="content">
+              <%= render 'pages/navbar' %>
+               <% if notice %>
+      <div class="alert alert-success alert-dismissible fade show " role="alert">
+        <%= notice %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <% end %>
+    <% if alert %>
+     <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= alert %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <% end %>
+              <%#= render 'pages/sales' %>
+              <%#= render 'pages/sales_show_recent' %>
+                <%#= render 'pages/widgest' %>
+                  <%#= render 'pages/footer' %>
+        <div>
+     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <div>
+
+    <%= yield %>
+   
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

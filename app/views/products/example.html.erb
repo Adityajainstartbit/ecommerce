@@ -1,0 +1,119 @@
+<% else %>
+
+	<div class="container">
+		<div class="row isotope-grid"> 
+				               
+			<% @products.each do |product| %>
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">                         
+					
+					<div class="block2">
+						<div class="block2-pic hov-img0",style="width:100px ,height:207px">         
+							<% if product.image.attached? %>
+								<%= image_tag product.image, style: "width: 140px; height: 200px;"%>
+							<% end %>
+							
+								<button type="button" class="btn btn-success block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 quick-view-button"  , data-toggle="modal" data-target="#quickViewModal"  data-id="<%= product.id %>", style="left:100px">
+									Quick View
+								</button>  
+                                 <%#= link_to 'View Details', product_path(product), remote: true, data: { toggle: 'modal', target: '#cartModal' } %>
+                                  
+						</div>  
+						
+						<%= link_to "Add to cart", line_items_path(product_id: product.id), method: :post %>
+						
+						<div class="block2-txt flex-w flex-t p-t-14">
+								<div class="block2-txt-child1 flex-col-l ">
+									<div class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+											
+									
+										<%= product.name %>
+									</div>
+									<span class="stext-105 cl3">
+										<%= product.price %> Rs
+									</span>
+								</div>
+						</div>
+
+						
+				</div>
+			<% end %>
+		</div>
+	</div>
+    <div class="modal fade" id="quickViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header border-bottom-0">
+										<h5 class="modal-title" id="exampleModalLabel">
+											
+										</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<table class="table table-image">
+											<thead>
+												<tr>
+													<th scope="col"></th>
+													<th scope="col">Product</th>
+													<th scope="col">Price</th>
+													<th scope="col">Qty</th>
+													<th scope="col">Total</th>
+													<th scope="col">Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+
+													<td class="w-25">
+
+														
+													<% if product.image.attached? %>
+													<%= image_tag product.image, class:"img-fluid img-thumbnail", style: "width: 200px; height: 200px;"%>
+													<%#= image_tag product.image.variant(resize: "400x400") %>
+													<% end %>
+													</td>
+													<td><%= product.name %></td>
+													<td><%= product.price %> Rs</td>
+													<td class="qty"><input type="text" class="form-control" id="input1" value="2"></td>
+													<td>178$</td>
+													<td>
+														<a href="#" class="btn btn-danger btn-sm">
+															<i class="fa fa-times"></i>
+														</a>
+													</td>
+												</tr>
+											</tbody>
+										</table> 
+										<div class="d-flex justify-content-end">
+											<h5>Total: <span class="price text-success">89$</span></h5>
+										</div>
+									</div>
+									<div class="modal-footer border-top-0 d-flex justify-content-between">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+										<button type="button" class="btn btn-success">Checkout</button>
+									</div>
+								</div>
+							</div>
+							</div>  
+											
+								
+						</div>
+
+<% end %>
+<script>
+	document.getElementByID("exampleModalLabel").innerHtml=name
+$(document).on('click', '[data-toggle="modal"]', function () {
+  var productId = $(this).data('id');
+  $.ajax({
+    url: '/products/' + productId,
+    type: 'GET',
+    dataType: 'json',
+    success: function (data) {
+      // Fill in the modal content with the product details
+      $('#quickViewModal .modal-body').html(data.html);
+    }
+  });
+});
+
+	</script>

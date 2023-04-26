@@ -1,0 +1,4 @@
+$('#product-modal-label').text('<%= @product.name %>');
+$('#product-image').html('<%= image_tag @product.image.url %>');
+$('#product-details').html('<%= @product.description %>');
+$('#product-modal').modal('show');

@@ -1,0 +1,85 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Categories</h1>
+ 
+
+
+ <%= search_form_for @q do |f| %>
+        
+            <%= f.search_field :name_cont,placeholder: 'enter a category' %>
+            <%= f.submit  class: 'btn btn-success'%>
+          <% link_to '', categories_path,class:'fa fa-refresh' %> 
+        <% end %>
+        <table class="table table-striped ">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Image</th>
+      <th>Action </th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+ 
+  <% @categories.each do |category| %>
+
+<%#        
+    <div class="text-center">
+      <div class="card text-center" style="width: 18rem;">
+      <% #if category.image.attached?%>
+          <%#= image_tag category.image %>
+      <%# end %>
+ 
+
+  <%# <div class="card-body">
+    <div class="card-title"> %>
+      <%#= category.name %>
+
+    <%# </div> %>
+   
+   <%#= link_to 'Show', category %>
+        <%#= link_to 'Edit', edit_category_path(category) %>
+       <%# = link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }
+  </div>
+</div>
+</div> %>
+
+  <tbody>
+   
+      <tr>
+        <td><%= category.name %></td>
+         <% if category.image.attached?%>
+         <td> <%= image_tag category.image %> </td>
+          <% end %>
+  <% if user_signed_in? && current_user.has_role?(:admin) %>
+        <td><%= link_to  category do %>
+          <i class="fa fa-eye"></i> 
+                   <% end %>
+        </td>
+       
+        <td><%= link_to  edit_category_path(category) do %>
+                 <i class="fa fa-pencil"></i> 
+                   <% end %>
+        </td>
+        <td><%= link_to category, method: :delete, data: { confirm: 'Are you sure?' } do %>
+         <i class="fa fa-trash"></i>
+         <% end %>
+        </td>
+        <% end %>
+      </tr>
+
+
+  </tbody>
+      <% end %>
+</table>
+
+
+    
+
+
+<br>
+<div class="col-md-12 bg-light text-center">
+<%= link_to 'New Category', new_category_path, class:'btn btn-primary ' %>
+</div>
+
+<%= link_to 'New Category', new_category_path %>
+<%#= pagy_nav(@pagy) %>

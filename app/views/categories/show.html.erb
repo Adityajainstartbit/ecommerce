@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="row">
+     <div class="col-4">
+            <% if @category.image.attached?%>
+                <td> <%= image_tag @category.image %> </td>
+            <% end %>
+      </div>
+              <div class="col-6">
+                <%= @category.name %> <br>
+              
+
+              </div>
+    </div>
+</div>
+
+<p>
+  <strong>Name:</strong>
+  <%= @category.name %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+   <% if @category.image.attached?%>
+         <td> <%= image_tag @category.image %> </td>
+    <% end %>
+  
+</p>
+
+<%= link_to 'Edit', edit_category_path(@category) ,class:'btn btn-primary' %> |
+<%= link_to 'Back', categories_path, class: 'btn btn-primary'%>
+ 

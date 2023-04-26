@@ -1,0 +1,61 @@
+<%= form_with(model: product,local: true) do |form| %>
+  <% if product.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+        <% product.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+
+
+    <div class="bg-light rounded h-100 p-4">
+                          <%= form.label :name %>
+                            <div class="form-floating mb-3">
+                                  
+                           
+                                 <%= form.text_field :name, class:'form-control'%>
+                                
+                            </div>
+                             <%= form.label :description %>
+                            <div class="form-floating mb-3">
+                                 
+                                   <%= form.text_area :desciption ,class:'form-control' %>
+                            </div>
+                               <%= form.label :price %>
+                            <div class="form-floating mb-3">
+                                 <div class="form-floating mb-3">
+                                  
+                                     <%= form.number_field :price,class:'form-control' %>
+                            </div>
+                            </div>
+                            <div class="form-floating mb-3">
+
+                                    <%= form.label :stock %>
+                            
+                                 <%= form.number_field :stock,class:'form-control' %>
+                            </div>
+                            </div>
+                            Image
+                            <div class="form-floating mb-3">
+                                 <div class="form-floating mb-3">
+                      
+                                 <%= form.file_field :image,class:'form-control' %>
+                            </div>
+                            </div>
+                             <div class="form-floating mb-3">
+                                 <div class="form-floating mb-3">
+                                    <%= form.collection_select(:category_id, Category.all, :id, :name) %>
+                                   
+                                 <%#= form.text_field :category_id,class:'form-control' %> 
+                            </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <%= form.submit %>
+                    <% end %>

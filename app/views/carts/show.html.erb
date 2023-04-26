@@ -1,0 +1,177 @@
+
+<div class="container">
+  <h2>Your Cart</h2>
+  <% if @cart.line_items.any? %>
+    <table class="table" style="margin-top:60px">
+      <thead>
+        <tr>
+          <th>image </th>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>  
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @cart.line_items.each do |line_item| %>
+          <tr>
+             <td class="align-middle">
+              <% if line_item.product.image.attached? %>
+                <%= image_tag line_item.product.image, style: "width: 50px;", alt: "" %>
+              <% end %>
+              </td>
+            <td>
+             
+             
+             
+              <h4><%= line_item.product.name %></h4>
+            </td>
+            <td><%= number_to_currency(line_item.product.price) %></td>
+            <td>
+              <%= link_to "-", line_item_reduce_path(line_item), method: :post %>
+              <%= line_item.quantity %>
+              <%= link_to "+", line_item_add_path(line_item), method: :post %>
+            </td>
+            <td><%= number_to_currency(line_item.total_price) %></td>
+            <td><%= link_to "Remove", line_item_path(line_item), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3"><strong>Total:</strong></td>
+          <td><strong><%= number_to_currency(@cart.sub_total) %></strong></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+    <%= link_to "Continue Shopping", products_path, class: "btn btn-primary",style:"margin-bottom:51px;" %>
+    <%= link_to "Checkout", new_order_path, class: "btn btn-success float-right" %>
+  <% else %>
+    <p>Your cart is empty.</p>
+    <%= link_to "Continue Shopping", products_path, class: "btn btn-primary", style:"margin-bottom:51px" %>
+  <% end %>
+</div>
+
+<% if @cart.line_items.any? %>
+        <section class="h-100 gradient-custom">
+          <div class="container py-5">
+            <div class="row d-flex justify-content-center my-4">
+              <div class="col-md-8">
+                <div class="card mb-4">
+                  <div class="card-header py-3">
+                    <h5 class="mb-0">Cart  items</h5>
+                  </div>
+                  <% @cart.line_items.each do |line_item| %>
+                  <div class="card-body">
+                    <!-- Single item -->
+                    <div class="row">
+                      <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                        <!-- Image -->
+                        <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                           <% if line_item.product.image.attached? %>
+                            <%= image_tag line_item.product.image, style: "width: 50px;", alt: "" %>
+                            <% end %>
+                        
+                          
+                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                          </a>
+                        </div>
+                        <!-- Image -->
+                      </div>
+
+                      <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                        <!-- Data -->
+                        <p><strong><%= line_item.product.name %></strong></p>
+                       
+                        
+                         <%= link_to  line_item_path(line_item), method: :delete, data: { confirm: "Are you sure?", mdb_toggle: "tooltip" }, class: "btn btn-primary btn-sm me-1 mb-2", title: "Remove item" do %>
+                              <i class="fas fa-trash">Remove</i>
+                            <% end %>
+
+
+                       
+                        <!-- Data -->
+                      </div>
+
+                      <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                        <!-- Quantity -->
+                        <div class="d-flex mb-4" style="max-width: 300px">
+
+                          <%= link_to  line_item_reduce_path(line_item), class:"btn btn-primary px-3 me-2", method: :post do %>
+                          
+                            <i class="fas fa-minus"></i>
+                           <%end %>
+
+                          <div class="form-outline">
+                           <%= number_to_currency(line_item.product.price) %>
+                            <label class="form-label" for="form1">Quantity</label>
+                          </div>
+
+                          <%= link_to  line_item_add_path(line_item), class: "btn btn-primary px-3 me-2", data: { method: :post } do %>
+                                  <i class="fas fa-plus"></i>
+                                <% end %>
+
+                        </div>
+                        <!-- Quantity -->
+
+                        <!-- Price -->
+                        <p class="text-start text-md-center">
+                          <strong><%= number_to_currency(line_item.total_price) %></strong>
+                        </p>
+                        <!-- Price -->
+                      </div>
+                    </div>
+                    <!-- Single item -->
+
+                    <hr class="my-4" />
+
+                    <!-- Single item -->
+                   <% end %> 
+                  </div>
+                </div>
+                
+                
+              </div>
+              <div class="col-md-4">
+                <div class="card mb-4">
+                  <div class="card-header py-3">
+                    <h5 class="mb-0">Summary</h5>
+                  </div>
+                  <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                      <li
+                        class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                        Products
+                        <span> <%#= number_to_currency(line_item.total_price) %></span>
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                        Shipping
+                        <span>Gratis</span>
+                      </li>
+                      <li
+                        class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                        <div>
+                          <strong>Total amount</strong>
+                          <strong>
+                            <p class="mb-0">(including VAT)</p>
+                          </strong>
+                        </div>
+                        <span><strong><%= number_to_currency(@cart.sub_total) %></strong></span>
+                      </li>
+                    </ul>
+
+                    
+                    <%= link_to "Continue Shopping", products_path, class: "btn btn-primary" %>
+                    <%= link_to "Checkout", new_order_path, class: "btn btn-primary  btn-lg btn-block" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+<% else %>
+<p>Your cart is empty.</p>
+    <%= link_to "Continue Shopping", products_path, class: "btn btn-primary", style:"margin-bottom:51px" %>
+<% end %>

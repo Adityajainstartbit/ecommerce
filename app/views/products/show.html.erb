@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="row">
+     <div class="col-4">
+            <% if @product.image.attached?%>
+                <td> <%= image_tag @product.image    %> </td>
+            <% end %>
+      </div>
+              <div class="col-6", style="background-color: #efeeee;">
+                <%= label :name, "Name:" ,style:'color: black' %>
+                <%= @product.name %> <br>
+                 <%= label :name, "Description:" ,style:'color: black' %>
+                <%= @product.desciption %><br>
+                <%= label :name, "Price of product:", style:'color: black' %>
+                <%= @product.price %>Rs<br>
+                   <%= label :name, "Weight of product:",style:'color: black' %>
+                  <%= @product.weight %>gm<br>
+                    <%= @product.stock %><br>
+                     <%= label :name, "Present:",style:'color: black' %>
+                        <%= @product.status %>
+
+              </div>
+    </div>
+</div>
+
+<%= link_to 'Edit', edit_product_path(@product), class:'btn btn-primary' %> |
+<%= link_to 'Back', products_path, class: 'btn btn-primary ' %>
