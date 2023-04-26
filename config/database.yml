@@ -98,6 +98,6 @@ test:
 #   username: gofresh
 #   password: <%= ENV['GOFRESH_DATABASE_PASSWORD'] %>
 
-    production:
-      <<: *default
-      url: <%= ENV['DATABASE_URL'] %>
+production:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
