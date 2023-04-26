@@ -24,8 +24,8 @@ import "./admin/chart_min"
 import "./admin/easing_min"
 import "./admin/waypoints_min"
 import "./admin/wbowl_carousel_min"
-import "./admin/wmoment_min"
-import "./admin/moment_timezone_min"
+// import "./admin/wmoment_min"
+// import "./admin/moment_timezone_min"
 import "./admin/wwmain"
 // application.js
 
